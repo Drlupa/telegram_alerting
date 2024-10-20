@@ -15,16 +15,13 @@ data:
       - job_name: 'nginx-exporter'
         static_configs:
           - targets:
-              - 10.102.76.100:9113  # Replace with your exporter pod IP and port
-        # kubernetes_sd_configs:
-        #   - role: endpoints
+              - nginx-service.default:9113  # Replace with your exporter pod IP and port
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets:
+          - alertmanager-service.default:9093 
 
-        # relabel_configs:
-        #   - source_labels: [__meta_kubernetes_service_name]
-        #     action: keep
-        #     regex: nginx-service  # Replace with your service's name
-        metrics_path: /metrics  # Change if your NGINX metrics are on a different path
-        scheme: http  # or https if you're using SSL
     
   alert_rules.yml: |
     groups:

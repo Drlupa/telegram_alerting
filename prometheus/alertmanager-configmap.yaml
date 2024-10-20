@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+data:
+  alertmanager.yml: |
+    route:
+      group_wait: 30s
+      group_interval: 2m
+      repeat_interval: 2m
+      receiver: "telegram_api"
+      routes:
+      - matchers:
+        - severity="high"
+        receiver: telegram_api
+
+    receivers:
+    - name: telegram_api
+      telegram_configs:
+        - bot_token: '<api_roken>'  # Your bot token here
+          chat_id: <chat_id>  # Your chat ID here
