@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-exporter
+  template:
+    metadata:
+      labels:
+        app: nginx-exporter
+    spec:
+      containers:
+      - name: nginx-exporter
+        image: nginx/nginx-prometheus-exporter:1.3  # Use the latest version
+        ports:
+        - containerPort: 9113  # Default port for NGINX Exporter
+        args:
+          - -nginx.scrape-uri=http://nginx-service:8080/metrics  # NGINX metrics endpoint
+        resources:        
+          limits:
+            memory: "128Mi"
+            cpu: "0.2m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-exporter
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9113
+    targetPort: 9113
+    protocol: TCP
+  selector:
+    app: nginx-exporter

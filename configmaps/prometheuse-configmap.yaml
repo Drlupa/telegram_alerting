@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    rule_files:
+      - "/etc/prometheus/alert_rules.yml"
+
+    scrape_configs:
+      - job_name: 'nginx-exporter'
+        static_configs:
+          - targets:
+              - 10.102.76.100:9113  # Replace with your exporter pod IP and port
+        # kubernetes_sd_configs:
+        #   - role: endpoints
+
+        # relabel_configs:
+        #   - source_labels: [__meta_kubernetes_service_name]
+        #     action: keep
+        #     regex: nginx-service  # Replace with your service's name
+        metrics_path: /metrics  # Change if your NGINX metrics are on a different path
+        scheme: http  # or https if you're using SSL
+    
+  alert_rules.yml: |
+    groups:
+    - name: nginx.alert
+      rules:
+      - alert: NginxIsUnrechable
+        expr: nginx_up == 0
+        for: 1m
+        labels:
+          severity: high
+        annotations:
+          description: nginx is down for 1 minute
