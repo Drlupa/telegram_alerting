@@ -1,0 +1,20 @@
+releases:
+  - name: prometheus
+    namespace: monitoring
+    installed: true
+    chart: charts/prometheus
+  
+  - name: grafana
+    namespace: monitoring
+    installed: true
+    chart: charts/grafana
+
+  - name: nginx
+    namespace: web
+    installed: true
+    chart: charts/nginx
+
+  # - name: traefik
+  #   namespace: traefik
+  #   installed: true
+  #   chart: charts/traefik
