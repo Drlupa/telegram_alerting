@@ -17,5 +17,5 @@ data:
     receivers:
     - name: telegram_api
       telegram_configs:
-        - bot_token: '<api_roken>'  # Your bot token here
-          chat_id: <chat_id>  # Your chat ID here
+        - bot_token: '<bot_token>'  # Your bot token here
+          chat_id: <chat_id> # Your chat ID here

@@ -15,12 +15,12 @@ data:
       - job_name: 'nginx-exporter'
         static_configs:
           - targets:
-              - nginx-service.default:9113  # Replace with your exporter pod IP and port
+              - nginx-service.web:9113  # Replace with your exporter pod IP and port
     alerting:
       alertmanagers:
       - static_configs:
         - targets:
-          - alertmanager-service.default:9093 
+          - alertmanager-service.monitoring:9093 
 
     
   alert_rules.yml: |
