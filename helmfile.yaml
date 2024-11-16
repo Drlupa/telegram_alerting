@@ -1,3 +1,7 @@
+repositories:
+  - name: traefik
+    url: https://traefik.github.io/charts
+
 releases:
   - name: prometheus
     namespace: monitoring
@@ -17,4 +21,4 @@ releases:
   # - name: traefik
   #   namespace: traefik
   #   installed: true
-  #   chart: charts/traefik
+  #   chart: traefik/traefik
